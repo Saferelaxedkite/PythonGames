@@ -1,0 +1,55 @@
+import pygame
+from random import randint
+from pygame.locals import *
+import time
+# color generator
+def color():
+    colors=[]
+    for x in range(0,3):
+        colors.append(randint(0,255))
+    return tuple(colors)
+# text
+def show_text(msg, x, y, color, size):
+    fontobj= pygame.font.SysFont('rockwell', size)
+    msgobj = fontobj.render(msg,False,color)
+    screen.blit(msgobj,(x, y))
+
+
+pygame.init()
+screenwidth=1000
+screenheight=700
+name="HI"
+screen=pygame.display.set_mode((screenwidth,screenheight))
+clock=pygame.time.Clock()
+pygame.display.set_caption(name)
+cords=(0,0)
+x=randint(0,980)
+y=randint(0,680)
+x1=randint(0,980)
+y1=randint(0,680)
+hit=False
+gameover=False
+while True:
+    if gameover==False:
+        clock.tick(65)
+        screen.fill((0,0,0))
+        wrong=pygame.draw.rect(screen,(255,255,255),(x1,y1,21,21))
+        target=pygame.draw.rect(screen,(255,255,255),(x,y,20,20))
+        crosshairs=pygame.draw.circle(screen,(255,0,0),cords,30,5)
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type==QUIT:
+                pygame.quit()
+                exit()
+            if event.type==MOUSEMOTION:
+                cords=event.pos
+            if event.type==MOUSEBUTTONDOWN:
+                if pygame.Rect.colliderect(target,crosshairs)==True:
+                    x=randint(0,980)
+                    y=randint(0,680)
+                    x1=randint(0,980)
+                    y1=randint(0,680)
+                elif pygame.Rect.colliderect(wrong,crosshairs)==True:
+                    show_text("GAME OVER",350,350,(255,0,0),50)
+                    gameover=True
+                    pygame.display.update()

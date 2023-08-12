@@ -1,0 +1,41 @@
+import pygame
+from random import randint
+from pygame.locals import *
+import time
+# color generator
+def color():
+    colors=[]
+    for x in range(0,3):
+        colors.append(randint(0,255))
+    return tuple(colors)
+# text
+def show_text(msg, x, y, color, size):
+    fontobj= pygame.font.SysFont('rockwell', size)
+    msgobj = fontobj.render(msg,False,color)
+    screen.blit(msgobj,(x, y))
+
+
+pygame.init()
+screenwidth=900
+screenheight=900
+name="HI"
+screen=pygame.display.set_mode((screenwidth,screenheight))
+clock=pygame.time.Clock()
+clicked=False
+pygame.display.set_caption(name)
+pygame.draw.rect(screen,color(),(100,50,350,400))
+pygame.display.update()
+while True:
+    pygame.display.update()
+    if clicked==True:
+        pygame.draw.rect(screen,color(),(100,50,350,400))
+        clicked=False
+    for event in pygame.event.get():
+        if event.type==QUIT:
+            pygame.quit()
+            exit()
+        if event.type==MOUSEBUTTONDOWN:
+            if event.pos[0] in range(100,450) and event.pos[1] in range(50,450):
+                clicked=True
+        if event.type==MOUSEBUTTONUP:
+            clicked=False
