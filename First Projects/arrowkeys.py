@@ -1,3 +1,4 @@
+# My First Code
 import pygame
 from random import randint
 from pygame.locals import *
