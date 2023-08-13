@@ -39,17 +39,29 @@ while True:
     if game_over==False:
         if key_input[pygame.K_LEFT] and x!=0:
             while x !=0:
+                screen.fill((0,255,0))
                 x -= step
+                player=pygame.draw.rect(screen,(0,0,2,55),(x,y,100,100))
+                pygame.display.update()
         if key_input[pygame.K_UP] and y!=0:
             while y !=0:
+                screen.fill((0,255,0))
                 y -= step
+                player=pygame.draw.rect(screen,(0,0,2,55),(x,y,100,100))
+                pygame.display.update()
         if key_input[pygame.K_RIGHT] and x!=screenwidth-100:
             while x !=screenwidth-100:
                 x += step
+                screen.fill((0,255,0))
+                player=pygame.draw.rect(screen,(0,0,2,55),(x,y,100,100))
+                pygame.display.update()
         if key_input[pygame.K_DOWN] and y!=screenheight-100:
             while y !=screenheight-100:
                 y += step
-                pygame.clock.sleep(21312321321312312312312)
+                screen.fill((0,255,0))
+                player=pygame.draw.rect(screen,(0,0,2,55),(x,y,100,100))
+                pygame.display.update()
+
 
 
         if key_input[pygame.K_a] and enemy_x!=0:
