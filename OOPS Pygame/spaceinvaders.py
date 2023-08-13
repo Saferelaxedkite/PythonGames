@@ -55,23 +55,24 @@ class bullet(character):
         self.y-=self.speed
 
 class alienbullet(bullet):
-    def __init__(self,x,y,color,height,width,speed,bullets,fired):
+    def __init__(self,x,y,color,height,width,speed,bullets,fired,list):
         self.x=x
         self.y=y
         self.color=color
         self.height=height
         self.width=width
-        self.speed=speed
+        self.speed=3
         self.bullets=bullets
         self.fired=fired
-        self.delay=randint(30,100)
+        self.delay=randint(500,1000)
+        self.list=list
     def fire(self,alienbulletlist,spaceship):
         for b in alienbulletlist:
             if pygame.Rect.colliderect(pygame.Rect(b.x,b.y,b.width,b.height),
             pygame.Rect(spaceship.x,spaceship.y,spaceship.width,spaceship.height)):
                 self.bullets="HIT"
         self.y+=self.speed
- 
+
 def color():
     colors=[]
     for x in range(0,3):
@@ -100,7 +101,7 @@ spaceship=player(400,700,(0,0,255),30,100,5,0,True)
 bullets=[]
 bulletsleft=100
 gameover=False
-alienbullets=[alienbullet(0,0,(0,0,0),1,1,0,0,True)]
+alienbullets=[alienbullet(0,0,(0,0,0),1,1,0,0,True,[])]
 for y in range(1,3):
     for x in range(1,11):
         aliens.append(alien(x*50,y*50,(255,0,0),30,30,5,1,True))
@@ -112,7 +113,6 @@ while True:
     if gamestart==True:
         if gameover==False:
             clock.tick(60)
-            allnums.append(0)
             screen.blit(bg,(0,0))
             bulletsleft1="BULLETS: "+str(bulletsleft)
             show_text(bulletsleft1,650,50,(255,255,255),30)
@@ -124,22 +124,21 @@ while True:
             for a in aliens:
                 a.draw() 
                 a.movealien()
-                for c in alienbullets:
-                    if c. bullets=="HIT":
-                        show_text("GAME OVER",300,300,(255,255,255),50)
-                        gameover=True
-                    if c.y>=900:
-                        alienbullets.remove(c)
-                    c.fire(alienbullets,spaceship)
-                    c.draw()
-                if len(allnums)>=c.delay:
-                    if alienbullet(a.x,a.y,(66,135,245),10,10,5,0,True) not in alienbullets:
-                        alienbullets.append(alienbullet(a.x,a.y,(25,0,0),10,10,3,0,True))
-                    allnums=[]
-                    c.delay=randint(30,100)
                 if a.y>=670:
                     show_text("GAME OVER",300,300,(0,0,0),50)
                     gameover=True
+            for c in alienbullets:
+                c.list.append(0)
+                if c. bullets=="HIT":
+                    show_text("GAME OVER",300,300,(255,255,255),50)
+                    gameover=True
+                if c.y>=900:
+                    alienbullets.remove(c) 
+                c.fire(alienbullets,spaceship)
+                print(alienbullets)
+                c.draw()
+                if len(c.list)>=c.delay:
+                    alienbullets.append(alienbullet(a.x,a.y,(25,0,0),10,10,1,0,True,[]))
             if key[K_SPACE] and cooldown==False and bulletsleft>0:
                 bullets.append(bullet(spaceship.x+50,700,(250,0,0),10,10,10,0,True))
                 cooldown=True
@@ -163,7 +162,7 @@ while True:
                 bullets=[]
                 bulletsleft=100
                 gameover=False
-                alienbullets=[alienbullet(0,0,(0,0,0),1,1,0,0,True)]
+                alienbullets=[alienbullet(0,0,(0,0,0),1,1,0,0,True,[])]
                 for y in range(1,3):
                     for x in range(1,11):
                         aliens.append(alien(x*50,y*50,(255,0,0),30,30,5,1,True))
