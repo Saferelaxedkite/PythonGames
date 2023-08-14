@@ -94,7 +94,7 @@ pos=0
 while True:
     y1=800
     z1=-100
-    screen.blit(bg,(0,0))
+    # screen.blit(bg,(0,0))
     hitlist=[]
     tilelevel=[]
     for z in range(0,len(level[counter])):
